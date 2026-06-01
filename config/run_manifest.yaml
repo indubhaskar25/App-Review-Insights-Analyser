@@ -1,0 +1,37 @@
+product: "Groww"
+week_id: "2026-W20"
+
+date_range:
+  start: "2026-02-24"
+  end: "2026-05-19"
+
+inputs:
+  app_store_csv: "reviews_raw/groww_appstore.csv"
+  play_store_csv: "reviews_raw/groww_playstore.csv"
+
+outputs:
+  run_dir: "data/runs/2026-W20"
+
+email:
+  to: "you@company.com"
+  subject_template: "[Weekly Pulse] {product} — {week_id}"
+
+docs:
+  title_template: "{product} — Weekly Review Pulse — {week_id}"
+
+llm:
+  provider: "groq"
+  model: "llama-3.3-70b-versatile"
+  model_classification: "llama-3.1-8b-instant"
+  model_summary: "llama-3.3-70b-versatile"
+  temperature: 0.3
+  temperature_classification: 0.3
+  temperature_summary: 0.4
+  inter_call_delay: 18
+  review_text_truncation: 40
+
+theming:
+  max_themes: 5
+  batch_size: 25
+  legend_path: "config/theme_legend.yaml"
+  review_limit: 1000

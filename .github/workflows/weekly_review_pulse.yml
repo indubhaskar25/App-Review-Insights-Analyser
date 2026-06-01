@@ -1,0 +1,486 @@
+# ─────────────────────────────────────────────────────────────
+#  Weekly Review Pulse — GitHub Actions Workflow
+#
+#  Runs the full App Review Insights pipeline (Phases 1→5)
+#  every Monday at 09:00 UTC, or on-demand via workflow_dispatch.
+#
+#  Required GitHub Secrets:
+#    GROQ_API_KEY      – Groq LLM API key
+#    GOOGLE_DOC_ID     – Target Google Doc ID for publishing
+#    EMAIL_TO          – Recipient email for the Gmail draft
+#    MCP_SERVER_URL    – (optional) MCP server URL
+#
+#  How to trigger manually:
+#    1. Go to Actions tab → "Weekly Review Pulse"
+#    2. Click "Run workflow" (top-right)
+#    3. Fill in optional inputs and click "Run workflow"
+# ─────────────────────────────────────────────────────────────
+
+name: Weekly Review Pulse
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC
+    - cron: "0 9 * * 1"
+
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: "Override week ID (e.g. 2026-W22). Leave empty for auto-detect."
+        required: false
+        default: ""
+      through_phase:
+        description: "Run through phase N (1-5). Default: 5 (all phases)."
+        required: false
+        default: "5"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+      skip_mcp:
+        description: "Skip MCP phases (4-5)? Useful for testing Phases 1-3 only."
+        required: false
+        default: false
+        type: boolean
+
+env:
+  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+  GOOGLE_DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
+  EMAIL_TO: ${{ secrets.EMAIL_TO }}
+  MCP_SERVER_URL: ${{ secrets.MCP_SERVER_URL || 'https://mcp-server-production-4969.up.railway.app' }}
+  # Retry configuration
+  MAX_RETRIES: "3"
+  RETRY_DELAY: "30"
+
+jobs:
+  weekly-pulse:
+    name: Run Weekly Review Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    # Expose week_id as a job output for the failure notification job
+    outputs:
+      week_id: ${{ steps.week.outputs.week_id }}
+      run_dir: ${{ steps.week.outputs.run_dir }}
+
+    steps:
+      # ── 0. Checkout ──
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 1. Setup Python ──
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # ── 2. Install dependencies ──
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install "google-play-scraper>=1.2.0"
+
+      # ── 3. Validate required secrets ──
+      - name: Validate required secrets
+        run: |
+          python -c "
+          import os, sys
+          missing = []
+          if not os.environ.get('GROQ_API_KEY'):
+              missing.append('GROQ_API_KEY')
+          if missing:
+              print(f'ERROR: Missing required GitHub Secrets: {missing}')
+              print('Go to Settings → Secrets and variables → Actions to add them.')
+              sys.exit(1)
+          print('Required secrets present.')
+          "
+
+      # ── 4. Compute week_id and date range ──
+      - name: Compute week parameters
+        id: week
+        run: |
+          python -c "
+          from datetime import date, timedelta
+          import os
+
+          override = '${{ github.event.inputs.week_id }}'
+          if override:
+              week_id = override
+          else:
+              today = date.today()
+              year, week_num, _ = today.isocalendar()
+              week_id = f'{year}-W{week_num:02d}'
+
+          # Compute 12-week lookback window
+          today = date.today()
+          end_date = today.strftime('%Y-%m-%d')
+          start_date = (today - timedelta(weeks=12)).strftime('%Y-%m-%d')
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'week_id={week_id}\n')
+              f.write(f'start_date={start_date}\n')
+              f.write(f'end_date={end_date}\n')
+              f.write(f'run_dir=data/runs/{week_id}\n')
+          print(f'Week: {week_id}  Window: {start_date} → {end_date}')
+          "
+
+      # ── 5. Update manifest for this week ──
+      - name: Update run manifest
+        run: |
+          python scripts/update_manifest.py \
+            --week-id "${{ steps.week.outputs.week_id }}" \
+            --start-date "${{ steps.week.outputs.start_date }}" \
+            --end-date "${{ steps.week.outputs.end_date }}"
+
+      # ── 6. Fetch latest Play Store reviews ──
+      - name: Fetch Play Store reviews
+        run: python scripts/fetch_groww_playstore.py
+        continue-on-error: true   # Non-fatal: existing CSV is used as fallback
+
+      # ── 7. Phase 1 — Import & Normalize ──
+      - name: "Phase 1: Import & Normalize"
+        id: phase1
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: ${{ env.MAX_RETRIES }}
+          retry_wait_seconds: ${{ env.RETRY_DELAY }}
+          command: |
+            python -m src.phase1_import.cli \
+              --week-id "${{ steps.week.outputs.week_id }}" \
+              --manifest config/run_manifest.yaml
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
+      # ── 8. Phase 2 — Theme Grouping ──
+      - name: "Phase 2: Theme Grouping"
+        id: phase2
+        if: ${{ !cancelled() && steps.phase1.outcome == 'success' && (github.event.inputs.through_phase || '5') >= '2' }}
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 20
+          max_attempts: ${{ env.MAX_RETRIES }}
+          retry_wait_seconds: ${{ env.RETRY_DELAY }}
+          command: |
+            python -m src.phase2_theming \
+              --week-id "${{ steps.week.outputs.week_id }}" \
+              --manifest config/run_manifest.yaml
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
+      # ── 9. Phase 3 — Weekly Note Generation ──
+      - name: "Phase 3: Weekly Note Generation"
+        id: phase3
+        if: ${{ !cancelled() && steps.phase2.outcome == 'success' && (github.event.inputs.through_phase || '5') >= '3' }}
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: ${{ env.MAX_RETRIES }}
+          retry_wait_seconds: ${{ env.RETRY_DELAY }}
+          command: |
+            python -m src.phase3_note \
+              --week-id "${{ steps.week.outputs.week_id }}" \
+              --manifest config/run_manifest.yaml
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
+      # ── 10. Phase 4 — Google Docs (MCP) ──
+      - name: "Phase 4: Publish to Google Docs"
+        id: phase4
+        if: >-
+          ${{ !cancelled() && steps.phase3.outcome == 'success'
+              && (github.event.inputs.through_phase || '5') >= '4'
+              && (github.event.inputs.skip_mcp || 'false') != 'true' }}
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: ${{ env.MAX_RETRIES }}
+          retry_wait_seconds: ${{ env.RETRY_DELAY }}
+          command: |
+            python -m src.phase4_docs_mcp \
+              --week-id "${{ steps.week.outputs.week_id }}" \
+              --manifest config/run_manifest.yaml
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
+          MCP_SERVER_URL: ${{ env.MCP_SERVER_URL }}
+
+      # ── 11. Phase 5 — Gmail Draft (MCP) ──
+      - name: "Phase 5: Create Gmail Draft"
+        id: phase5
+        if: >-
+          ${{ !cancelled() && steps.phase3.outcome == 'success'
+              && (github.event.inputs.through_phase || '5') >= '5'
+              && (github.event.inputs.skip_mcp || 'false') != 'true' }}
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: ${{ env.MAX_RETRIES }}
+          retry_wait_seconds: ${{ env.RETRY_DELAY }}
+          command: |
+            python -m src.phase5_gmail_mcp \
+              --week-id "${{ steps.week.outputs.week_id }}" \
+              --manifest config/run_manifest.yaml
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          MCP_SERVER_URL: ${{ env.MCP_SERVER_URL }}
+
+      # ── 12. Generate consolidated weekly_summary.json ──
+      - name: Generate weekly_summary.json
+        if: always()
+        run: |
+          python -c "
+          import json, pathlib, datetime
+
+          run_dir = pathlib.Path('${{ steps.week.outputs.run_dir }}')
+          week_id = '${{ steps.week.outputs.week_id }}'
+          run_dir.mkdir(parents=True, exist_ok=True)
+
+          def load(name):
+              p = run_dir / name
+              return json.loads(p.read_text()) if p.exists() else {}
+
+          import_report   = load('import_report.json')
+          theming_report  = load('theming_report.json')
+          note_report     = load('note_report.json')
+          publish_result  = load('publish_result.json')
+          draft_result    = load('email_draft_result.json')
+
+          summary = {
+              'week_id': week_id,
+              'generated_at': datetime.datetime.utcnow().isoformat() + 'Z',
+              'pipeline': {
+                  'phase1_import':  '${{ steps.phase1.outcome }}',
+                  'phase2_theming': '${{ steps.phase2.outcome }}',
+                  'phase3_note':    '${{ steps.phase3.outcome }}',
+                  'phase4_docs':    '${{ steps.phase4.outcome }}',
+                  'phase5_gmail':   '${{ steps.phase5.outcome }}',
+              },
+              'import': {
+                  'total_reviews': import_report.get('total_reviews', 0),
+                  'date_range':    import_report.get('date_range', {}),
+                  'redactions':    import_report.get('redactions', 0),
+              },
+              'theming': {
+                  'themes_used':   theming_report.get('themes_used', 0),
+                  'reviews_classified': theming_report.get('reviews_classified', 0),
+              },
+              'note': {
+                  'word_count':    note_report.get('word_count', 0),
+                  'prompt_version': note_report.get('prompt_version', ''),
+                  'retries':       note_report.get('retries', 0),
+              },
+              'publish': {
+                  'status':  publish_result.get('status', 'skipped'),
+                  'doc_url': publish_result.get('doc_url', ''),
+              },
+              'email_draft': {
+                  'status':   draft_result.get('status', 'skipped'),
+                  'draft_id': draft_result.get('draft_id', ''),
+              },
+          }
+
+          out = run_dir / 'weekly_summary.json'
+          out.write_text(json.dumps(summary, indent=2))
+          print(f'weekly_summary.json written to {out}')
+          "
+
+      # ── 13. Generate email_draft.md (human-readable draft preview) ──
+      - name: Generate email_draft.md
+        if: always()
+        run: |
+          python -c "
+          import json, pathlib, datetime
+
+          run_dir = pathlib.Path('${{ steps.week.outputs.run_dir }}')
+          week_id = '${{ steps.week.outputs.week_id }}'
+          run_dir.mkdir(parents=True, exist_ok=True)
+
+          note_path = run_dir / 'weekly_note.md'
+          note_body = note_path.read_text() if note_path.exists() else '_Note not generated._'
+
+          pub = run_dir / 'publish_result.json'
+          doc_url = ''
+          if pub.exists():
+              doc_url = json.loads(pub.read_text()).get('doc_url', '')
+
+          draft_path = run_dir / 'email_draft_result.json'
+          draft_id = ''
+          if draft_path.exists():
+              draft_id = json.loads(draft_path.read_text()).get('draft_id', '')
+
+          lines = [
+              f'# Email Draft — {week_id}',
+              '',
+              f'**To:** \${{ secrets.EMAIL_TO or \"(see EMAIL_TO secret)\" }}',
+              f'**Subject:** [Weekly Pulse] Groww — {week_id}',
+              f'**Generated:** {datetime.datetime.utcnow().strftime(\"%Y-%m-%d %H:%M UTC\")}',
+              '',
+              '---',
+              '',
+              '## Body',
+              '',
+              note_body,
+              '',
+          ]
+          if doc_url:
+              lines += [f'📄 **Full report:** {doc_url}', '']
+          if draft_id:
+              lines += [f'📧 **Gmail draft ID:** \`{draft_id}\`', '']
+          lines += [
+              '---',
+              '_This is an automated draft. Review before sending._',
+          ]
+
+          out = run_dir / 'email_draft.md'
+          out.write_text('\n'.join(lines))
+          print(f'email_draft.md written to {out}')
+          "
+
+      # ── 14. Upload run artifacts ──
+      - name: Upload pipeline artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-pulse-${{ steps.week.outputs.week_id }}
+          path: |
+            ${{ steps.week.outputs.run_dir }}/weekly_note.md
+            ${{ steps.week.outputs.run_dir }}/weekly_note.json
+            ${{ steps.week.outputs.run_dir }}/email_draft.md
+            ${{ steps.week.outputs.run_dir }}/weekly_summary.json
+            ${{ steps.week.outputs.run_dir }}/note_report.json
+            ${{ steps.week.outputs.run_dir }}/theming_report.json
+            ${{ steps.week.outputs.run_dir }}/theme_report.json
+            ${{ steps.week.outputs.run_dir }}/themed_reviews.json
+            ${{ steps.week.outputs.run_dir }}/import_report.json
+            ${{ steps.week.outputs.run_dir }}/publish_result.json
+            ${{ steps.week.outputs.run_dir }}/email_draft_result.json
+            ${{ steps.week.outputs.run_dir }}/docs_report.json
+            ${{ steps.week.outputs.run_dir }}/gmail_report.json
+            ${{ steps.week.outputs.run_dir }}/run_state.json
+            ${{ steps.week.outputs.run_dir }}/run.log
+          retention-days: 30
+          if-no-files-found: warn
+
+      # ── 15. Write GitHub Job Summary ──
+      - name: Write job summary
+        if: always()
+        run: |
+          python -c "
+          import json, os, pathlib
+
+          run_dir = pathlib.Path('${{ steps.week.outputs.run_dir }}')
+          week_id = '${{ steps.week.outputs.week_id }}'
+
+          summary = []
+          summary.append(f'## 📊 Weekly Review Pulse — {week_id}')
+          summary.append('')
+
+          # Phase statuses
+          phases = {
+              'Phase 1 — Import':     '${{ steps.phase1.outcome }}',
+              'Phase 2 — Theming':    '${{ steps.phase2.outcome }}',
+              'Phase 3 — Note':       '${{ steps.phase3.outcome }}',
+              'Phase 4 — Docs MCP':   '${{ steps.phase4.outcome }}',
+              'Phase 5 — Gmail MCP':  '${{ steps.phase5.outcome }}',
+          }
+          icons = {'success': '✅', 'failure': '❌', 'skipped': '⏭️', 'cancelled': '🚫', '': '⏭️'}
+
+          summary.append('| Phase | Status |')
+          summary.append('|-------|--------|')
+          for name, status in phases.items():
+              icon = icons.get(status, '❓')
+              summary.append(f'| {name} | {icon} {status or \"skipped\"} |')
+          summary.append('')
+
+          # Import stats
+          imp = run_dir / 'import_report.json'
+          if imp.exists():
+              data = json.loads(imp.read_text())
+              total = data.get('total_reviews', '?')
+              summary.append(f'**Reviews imported:** {total}')
+              summary.append('')
+
+          # Note word count
+          note_report = run_dir / 'note_report.json'
+          if note_report.exists():
+              data = json.loads(note_report.read_text())
+              wc = data.get('word_count', '?')
+              summary.append(f'**Note word count:** {wc}/250')
+              summary.append('')
+
+          # Doc URL
+          pub = run_dir / 'publish_result.json'
+          if pub.exists():
+              data = json.loads(pub.read_text())
+              url = data.get('doc_url', '')
+              if url:
+                  summary.append(f'📄 [Open Google Doc]({url})')
+                  summary.append('')
+
+          # Draft ID
+          draft = run_dir / 'email_draft_result.json'
+          if draft.exists():
+              data = json.loads(draft.read_text())
+              did = data.get('draft_id', '')
+              if did:
+                  summary.append(f'📧 Gmail draft created (ID: \`{did}\`)')
+                  summary.append('')
+
+          # Artifacts note
+          summary.append('📦 Artifacts uploaded with 30-day retention.')
+          summary.append('')
+          summary.append(f'**Artifact bundle:** \`weekly-pulse-{week_id}\`')
+
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('\n'.join(summary))
+          "
+
+  # ── Failure notification ──
+  notify-failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: weekly-pulse
+    if: failure()
+    steps:
+      - name: Create failure issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const week_id = '${{ needs.weekly-pulse.outputs.week_id }}' || 'unknown';
+            const run_url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const trigger = context.eventName === 'schedule' ? 'Scheduled (Monday 09:00 UTC)' : 'Manual dispatch';
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Weekly Pulse pipeline failed — ${week_id} (${new Date().toISOString().slice(0,10)})`,
+              body: [
+                '## Pipeline Failure',
+                '',
+                `**Week:** ${week_id}`,
+                `**Trigger:** ${trigger}`,
+                `**Run:** ${run_url}`,
+                `**Date:** ${new Date().toISOString()}`,
+                '',
+                '## Next steps',
+                '',
+                '1. Open the run link above and check the failing step.',
+                '2. Common causes:',
+                '   - Missing or expired `GROQ_API_KEY` secret',
+                '   - MCP server unreachable (Phases 4–5)',
+                '   - Empty reviews CSV (run `scripts/fetch_groww_playstore.py` locally)',
+                '   - Groq rate limit hit (wait 24h or reduce `review_limit` in manifest)',
+                '3. Re-trigger manually from the Actions tab once fixed.',
+                '',
+                '> This issue was auto-created by the Weekly Review Pulse workflow.',
+              ].join('\n'),
+              labels: ['bug', 'pipeline'],
+            });

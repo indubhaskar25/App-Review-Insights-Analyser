@@ -1,0 +1,38 @@
+Review ID,Created,Rating,Title,Review
+AS001,2026-02-24,5,Smooth signup,OTP verification was instant. KYC done in one sitting.
+AS002,2026-02-24,2,KYC stuck,Document upload fails every time during verification.
+AS003,2026-03-05,1,UPI failed,Money debited from account but merchant says payment pending.
+AS004,2026-03-05,3,Okay start,App works but statement page loads slowly.
+AS005,2026-03-14,2,Bill pay issue,Electricity bill payment showed success but provider has no record.
+AS006,2026-03-14,5,Love UPI,Fast UPI to contacts. Best feature.
+AS007,2026-03-17,1,Crash on open,App crashes immediately after latest update on login.
+AS008,2026-03-17,4,Good card,Virtual debit card activation was easy.
+AS009,2026-03-26,2,ATM problem,ATM withdrawal declined twice despite sufficient balance.
+AS010,2026-03-26,3,Average,Works fine for small transfers.
+AS011,2026-04-04,1,Cannot login,Face ID login broken since yesterday. PIN also fails.
+AS012,2026-04-04,2,Support slow,No reply from in-app chat for 48 hours.
+AS013,2026-04-07,2,Transfer delay,IMPS transfer stuck in processing for 6 hours.
+AS014,2026-04-07,5,Great onboarding,Opened account in 10 minutes. Clear steps.
+AS015,2026-04-16,1,Payment nightmare,UPI mandate charged twice for same subscription.
+AS016,2026-04-16,3,KYC retry,Had to re-upload PAN twice but finally approved.
+AS017,2026-04-25,2,Notifications,Too many promotional push notifications.
+AS018,2026-04-25,4,Statement download,PDF statement download works well now.
+AS019,2026-04-28,4,Stable lately,No crashes this week. Previous issues seem fixed.
+AS020,2026-04-28,2,Refund pending,Refund for failed transaction not credited after 5 days.
+AS021,2026-05-07,1,App freeze,App freezes on payments screen every time.
+AS022,2026-05-07,5,Excellent,Best neobank for daily UPI. Highly recommend.
+AS023,2026-05-16,2,OTP delay,OTP for login arrives after 3 minutes.
+AS024,2026-05-16,3,Card delivery,Physical card still not delivered after 2 weeks.
+AS025,2026-05-12,2,KYC document,Passport photo rejected without clear reason.
+AS026,2026-03-14,2,Rent UPI,Rent UPI to landlord failed but amount left account.
+AS027,2026-03-26,3,Mini statement,Mini statement correct but full PDF delayed.
+AS028,2026-04-07,1,Freeze,App frozen on white screen after splash.
+AS029,2026-04-25,2,KYC pending,KYC marked pending for 10 days with no update.
+AS030,2026-05-07,4,Quick transfer,NEFT to self account credited within an hour.
+AS031,2026-05-16,1,Double charge,Subscription charged twice on same day.
+AS032,2026-03-17,2,Help center,FAQ did not cover failed UPI reversal steps.
+AS033,2026-04-04,3,Debit card,Debit card PIN set but first POS declined.
+AS034,2026-04-16,4,Improvement,Much faster after last patch. Good job.
+AS035,2026-04-28,2,Call support,Requested callback. Nobody called back.
+AS036,2026-03-05,5,First week,First week using app. Impressed with speed.
+AS037,2026-05-12,2,Passbook,Passbook entries delayed by one day sometimes.

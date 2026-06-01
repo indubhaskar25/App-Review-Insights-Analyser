@@ -1,0 +1,38 @@
+Review ID,Review Submit Date,Star Rating,Review Title,Review Text
+PS001,2026-02-24,1,UPI duplicate,UPI payment failed twice for same bill amount.
+PS002,2026-02-24,4,Easy KYC,Video KYC agent was helpful and quick.
+PS003,2026-03-05,2,Slow app,App very slow when opening transaction history.
+PS004,2026-03-05,5,Five stars,Seamless bank transfer experience.
+PS005,2026-03-14,1,Crash,Keeps crashing when I tap pay button.
+PS006,2026-03-14,2,Support ignored,Emailed support twice. No response.
+PS007,2026-03-17,3,Mixed,Good for UPI bad for card limits.
+PS008,2026-03-17,2,Withdrawal,ATM cash withdrawal failed at two different ATMs.
+PS009,2026-03-26,1,Login loop,Stuck in login loop after phone change.
+PS010,2026-03-26,5,Onboarding win,Signup and KYC smoother than my old bank.
+PS011,2026-04-04,2,Bill pay,Mobile recharge showed failed but money deducted.
+PS012,2026-04-04,4,Nice UI,Clean interface. Easy to find recent payments.
+PS013,2026-04-07,1,Fraud worry,Unknown small debit on statement. Scared.
+PS014,2026-04-07,2,KYC upload,Cannot upload Aadhaar image. Always says error.
+PS015,2026-04-16,3,Okay,Does the job for basic banking.
+PS016,2026-04-16,1,Broken update,Latest update broke fingerprint login completely.
+PS017,2026-04-25,2,UPI limit,Daily UPI limit too low for rent payment.
+PS018,2026-04-25,5,Reliable,Using daily for 3 months. Very reliable.
+PS019,2026-04-28,2,Pending txn,Transaction pending since morning. Very frustrating.
+PS020,2026-04-28,4,Card works,Contactless card payments work everywhere.
+PS021,2026-05-07,1,Worst week,Three failed UPI attempts in one day.
+PS022,2026-05-07,3,Chat bot,Chatbot useless for real problems.
+PS023,2026-05-16,2,Statement,Monthly statement PDF missing some transactions.
+PS024,2026-05-16,5,Recommended,Tell friends to use for UPI cashback.
+PS025,2026-05-12,2,OTP issue,Did not receive OTP for 20 minutes.
+PS026,2026-03-05,1,Failed payment,Payment failed but amount debited. Need refund.
+PS027,2026-03-17,2,Login OTP,Login OTP expired before I could type it.
+PS028,2026-04-04,4,Savings,Savings pot feature is useful and simple.
+PS029,2026-04-16,2,Merchant pay,Scan and pay failed at grocery store twice.
+PS030,2026-04-28,1,Uninstalling,Too many bugs. Considering uninstalling.
+PS031,2026-05-16,3,Average support,Support replied but solution did not work.
+PS032,2026-03-14,5,Fast KYC,KYC completed faster than expected. Happy.
+PS033,2026-03-26,2,Card block,Card blocked without SMS alert. Confusing.
+PS034,2026-04-07,3,History lag,Transaction history lags by few hours.
+PS035,2026-04-25,1,Crash pay,Crash when paying electricity bill.
+PS036,2026-05-07,2,Auto pay,Autopay executed twice for broadband.
+PS037,2026-05-12,4,Stable now,App stable after May update. Thanks.
