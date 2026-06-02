@@ -1,0 +1,52 @@
+{
+  "status": "success",
+  "week_id": "2026-W20",
+  "product": "Groww",
+  "generated_at": "2026-05-31T14:17:04Z",
+  "prompt_version": "weekly_note_v1",
+  "word_count": 175,
+  "retries": 0,
+  "pii_scan_result": [],
+  "validation_issues": [],
+  "errors": [],
+  "call_metadata": {
+    "model": "llama-3.3-70b-versatile",
+    "attempt": 1,
+    "latency_s": 1.93,
+    "tokens_in": 1015,
+    "tokens_out": 764,
+    "tokens_total": 1779,
+    "status": "ok"
+  },
+  "excluded_themes": [
+    {
+      "id": "onboarding",
+      "name": "KYC & Verification",
+      "theme_score": 0.3341,
+      "reason": "Not in top 3 by score"
+    },
+    {
+      "id": "stability",
+      "name": "App Stability & UX",
+      "theme_score": 0.3229,
+      "reason": "Not in top 3 by score"
+    }
+  ],
+  "top_themes": [
+    {
+      "id": "support",
+      "name": "Support & Service",
+      "theme_score": 0.4977
+    },
+    {
+      "id": "investments",
+      "name": "Mutual Funds & Investments",
+      "theme_score": 0.407
+    },
+    {
+      "id": "payments",
+      "name": "Payments & Transactions",
+      "theme_score": 0.3833
+    }
+  ]
+}

@@ -1,0 +1,765 @@
+{
+  "status": "success",
+  "week_id": "2026-W20",
+  "product": "Groww",
+  "generated_at": "2026-05-27T05:43:41Z",
+  "prompt_version": "theme_grouping_v1",
+  "preprocessing": {
+    "input_count": 1679,
+    "review_limit": 1000,
+    "truncation_words": 40,
+    "after_limit": 1000,
+    "truncated_count": 193
+  },
+  "classification": {
+    "model": "llama-3.1-8b-instant",
+    "temperature": 0.3,
+    "batch_size": 25,
+    "total_batches": 40,
+    "failed_batches": 0,
+    "total_classifications": 852,
+    "total_tokens_used": 174302,
+    "inter_call_delay_s": 18,
+    "batch_details": [
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 4.28,
+        "tokens_in": 2352,
+        "tokens_out": 2019,
+        "tokens_total": 4371,
+        "status": "ok",
+        "batch_index": 0,
+        "batch_size": 25,
+        "classifications_received": 25
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 9.45,
+        "tokens_in": 2248,
+        "tokens_out": 2048,
+        "tokens_total": 4296,
+        "status": "ok",
+        "batch_index": 1,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 30.07,
+        "tokens_in": 2258,
+        "tokens_out": 2048,
+        "tokens_total": 4306,
+        "status": "ok",
+        "batch_index": 2,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 22.42,
+        "tokens_in": 2292,
+        "tokens_out": 2048,
+        "tokens_total": 4340,
+        "status": "ok",
+        "batch_index": 3,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 23.56,
+        "tokens_in": 2291,
+        "tokens_out": 2048,
+        "tokens_total": 4339,
+        "status": "ok",
+        "batch_index": 4,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 28.57,
+        "tokens_in": 2393,
+        "tokens_out": 2048,
+        "tokens_total": 4441,
+        "status": "ok",
+        "batch_index": 5,
+        "batch_size": 25,
+        "classifications_received": 19
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 25.47,
+        "tokens_in": 2264,
+        "tokens_out": 2048,
+        "tokens_total": 4312,
+        "status": "ok",
+        "batch_index": 6,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 17.53,
+        "tokens_in": 2263,
+        "tokens_out": 2048,
+        "tokens_total": 4311,
+        "status": "ok",
+        "batch_index": 7,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 27.19,
+        "tokens_in": 2352,
+        "tokens_out": 2048,
+        "tokens_total": 4400,
+        "status": "ok",
+        "batch_index": 8,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 25.37,
+        "tokens_in": 2248,
+        "tokens_out": 2048,
+        "tokens_total": 4296,
+        "status": "ok",
+        "batch_index": 9,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 27.81,
+        "tokens_in": 2268,
+        "tokens_out": 2048,
+        "tokens_total": 4316,
+        "status": "ok",
+        "batch_index": 10,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 22.57,
+        "tokens_in": 2402,
+        "tokens_out": 2048,
+        "tokens_total": 4450,
+        "status": "ok",
+        "batch_index": 11,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 27.25,
+        "tokens_in": 2353,
+        "tokens_out": 2048,
+        "tokens_total": 4401,
+        "status": "ok",
+        "batch_index": 12,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 25.34,
+        "tokens_in": 2491,
+        "tokens_out": 2048,
+        "tokens_total": 4539,
+        "status": "ok",
+        "batch_index": 13,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 32.13,
+        "tokens_in": 2597,
+        "tokens_out": 2048,
+        "tokens_total": 4645,
+        "status": "ok",
+        "batch_index": 14,
+        "batch_size": 25,
+        "classifications_received": 19
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 25.13,
+        "tokens_in": 2312,
+        "tokens_out": 2048,
+        "tokens_total": 4360,
+        "status": "ok",
+        "batch_index": 15,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 23.85,
+        "tokens_in": 2301,
+        "tokens_out": 2048,
+        "tokens_total": 4349,
+        "status": "ok",
+        "batch_index": 16,
+        "batch_size": 25,
+        "classifications_received": 17
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 25.46,
+        "tokens_in": 2416,
+        "tokens_out": 2048,
+        "tokens_total": 4464,
+        "status": "ok",
+        "batch_index": 17,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 28.55,
+        "tokens_in": 2416,
+        "tokens_out": 2048,
+        "tokens_total": 4464,
+        "status": "ok",
+        "batch_index": 18,
+        "batch_size": 25,
+        "classifications_received": 19
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 21.0,
+        "tokens_in": 2371,
+        "tokens_out": 2048,
+        "tokens_total": 4419,
+        "status": "ok",
+        "batch_index": 19,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 27.71,
+        "tokens_in": 2255,
+        "tokens_out": 2048,
+        "tokens_total": 4303,
+        "status": "ok",
+        "batch_index": 20,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 24.24,
+        "tokens_in": 2321,
+        "tokens_out": 2048,
+        "tokens_total": 4369,
+        "status": "ok",
+        "batch_index": 21,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 23.59,
+        "tokens_in": 2244,
+        "tokens_out": 2048,
+        "tokens_total": 4292,
+        "status": "ok",
+        "batch_index": 22,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 29.5,
+        "tokens_in": 2242,
+        "tokens_out": 2048,
+        "tokens_total": 4290,
+        "status": "ok",
+        "batch_index": 23,
+        "batch_size": 25,
+        "classifications_received": 24
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 21.53,
+        "tokens_in": 2246,
+        "tokens_out": 2048,
+        "tokens_total": 4294,
+        "status": "ok",
+        "batch_index": 24,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 22.32,
+        "tokens_in": 2241,
+        "tokens_out": 2048,
+        "tokens_total": 4289,
+        "status": "ok",
+        "batch_index": 25,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 26.45,
+        "tokens_in": 2256,
+        "tokens_out": 2048,
+        "tokens_total": 4304,
+        "status": "ok",
+        "batch_index": 26,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 27.26,
+        "tokens_in": 2367,
+        "tokens_out": 2048,
+        "tokens_total": 4415,
+        "status": "ok",
+        "batch_index": 27,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 24.49,
+        "tokens_in": 2240,
+        "tokens_out": 2048,
+        "tokens_total": 4288,
+        "status": "ok",
+        "batch_index": 28,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 22.62,
+        "tokens_in": 2393,
+        "tokens_out": 2048,
+        "tokens_total": 4441,
+        "status": "ok",
+        "batch_index": 29,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 23.17,
+        "tokens_in": 2234,
+        "tokens_out": 2048,
+        "tokens_total": 4282,
+        "status": "ok",
+        "batch_index": 30,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 23.23,
+        "tokens_in": 2327,
+        "tokens_out": 2048,
+        "tokens_total": 4375,
+        "status": "ok",
+        "batch_index": 31,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 28.28,
+        "tokens_in": 2376,
+        "tokens_out": 2048,
+        "tokens_total": 4424,
+        "status": "ok",
+        "batch_index": 32,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 6.7,
+        "tokens_in": 2316,
+        "tokens_out": 2048,
+        "tokens_total": 4364,
+        "status": "ok",
+        "batch_index": 33,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 30.54,
+        "tokens_in": 2160,
+        "tokens_out": 2048,
+        "tokens_total": 4208,
+        "status": "ok",
+        "batch_index": 34,
+        "batch_size": 25,
+        "classifications_received": 23
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 24.5,
+        "tokens_in": 2337,
+        "tokens_out": 2048,
+        "tokens_total": 4385,
+        "status": "ok",
+        "batch_index": 35,
+        "batch_size": 25,
+        "classifications_received": 20
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 26.04,
+        "tokens_in": 2203,
+        "tokens_out": 2048,
+        "tokens_total": 4251,
+        "status": "ok",
+        "batch_index": 36,
+        "batch_size": 25,
+        "classifications_received": 22
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 27.39,
+        "tokens_in": 2315,
+        "tokens_out": 2048,
+        "tokens_total": 4363,
+        "status": "ok",
+        "batch_index": 37,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 24.12,
+        "tokens_in": 2237,
+        "tokens_out": 2048,
+        "tokens_total": 4285,
+        "status": "ok",
+        "batch_index": 38,
+        "batch_size": 25,
+        "classifications_received": 21
+      },
+      {
+        "model": "llama-3.1-8b-instant",
+        "attempt": 1,
+        "latency_s": 21.76,
+        "tokens_in": 2213,
+        "tokens_out": 2048,
+        "tokens_total": 4261,
+        "status": "ok",
+        "batch_index": 39,
+        "batch_size": 25,
+        "classifications_received": 21
+      }
+    ]
+  },
+  "validation": {
+    "max_themes": 5,
+    "unique_themes_found": 5,
+    "merge_log": []
+  },
+  "analytics": {
+    "themes": {
+      "support": {
+        "name": "Support & Service",
+        "review_count": 148,
+        "pct_of_total": 14.8,
+        "avg_rating": 1.46,
+        "low_rating_pct": 84.5,
+        "avg_confidence": 0.848,
+        "recency_score": 0.5035,
+        "theme_score": 0.4977
+      },
+      "investments": {
+        "name": "Mutual Funds & Investments",
+        "review_count": 327,
+        "pct_of_total": 32.7,
+        "avg_rating": 3.0,
+        "low_rating_pct": 44.6,
+        "avg_confidence": 0.829,
+        "recency_score": 0.488,
+        "theme_score": 0.407
+      },
+      "payments": {
+        "name": "Payments & Transactions",
+        "review_count": 52,
+        "pct_of_total": 5.2,
+        "avg_rating": 2.19,
+        "low_rating_pct": 63.5,
+        "avg_confidence": 0.837,
+        "recency_score": 0.5435,
+        "theme_score": 0.3833
+      },
+      "onboarding": {
+        "name": "KYC & Verification",
+        "review_count": 21,
+        "pct_of_total": 2.1,
+        "avg_rating": 2.62,
+        "low_rating_pct": 61.9,
+        "avg_confidence": 0.848,
+        "recency_score": 0.3905,
+        "theme_score": 0.3341
+      },
+      "stability": {
+        "name": "App Stability & UX",
+        "review_count": 281,
+        "pct_of_total": 28.1,
+        "avg_rating": 3.67,
+        "low_rating_pct": 30.2,
+        "avg_confidence": 0.822,
+        "recency_score": 0.4476,
+        "theme_score": 0.3229
+      }
+    },
+    "unmatched_reviews": [
+      {
+        "review_id": "play_store:65ae3332-9e23-4404-81bb-7277f129a482",
+        "text_snippet": "this is the best of our eyes in of the Play Store"
+      },
+      {
+        "review_id": "play_store:258c987f-1276-47db-8812-d37508cfcd70",
+        "text_snippet": "this one of the best gambling app"
+      },
+      {
+        "review_id": "play_store:20d8129f-42e6-4171-85a5-00b842e69c9a",
+        "text_snippet": "bad app no install new user exatra charge is app ko install kr ne se achaa to satta khel lo"
+      },
+      {
+        "review_id": "play_store:3ca14ae6-5fbb-486f-a148-eea2b8a81450",
+        "text_snippet": "froad app koi download nhi Karan hai"
+      },
+      {
+        "review_id": "play_store:0e41023f-d0e5-44de-ac0d-3bddd9ae6e87",
+        "text_snippet": "without financial literacy don't come to here"
+      },
+      {
+        "review_id": "play_store:ef160d2a-9334-416b-b3ff-d71d3b9481a1",
+        "text_snippet": "worst app i have used for waste of money brokrage are two high"
+      },
+      {
+        "review_id": "play_store:0e309136-f758-40b5-a76f-2d72a88a5b76",
+        "text_snippet": "ok thanks for everything you ok oo"
+      },
+      {
+        "review_id": "play_store:35caab63-8a97-4679-b2a3-d89dfd475695",
+        "text_snippet": "This is the app to fool the public."
+      },
+      {
+        "review_id": "play_store:165da23f-26db-4c72-8536-6bff89a423b5",
+        "text_snippet": "don't use this money West app groww nahi hoga."
+      },
+      {
+        "review_id": "play_store:474089bb-ea5a-4fa6-a426-ae5f16944a11",
+        "text_snippet": "persent time is very good, but future diside hardworking"
+      },
+      {
+        "review_id": "play_store:4a357045-3ce8-45bf-ac4d-b38708694df4",
+        "text_snippet": "financial year 26-27 kb aayegi app pr"
+      },
+      {
+        "review_id": "play_store:4f3ebd72-92d8-45c6-8807-0aac21b4fda3",
+        "text_snippet": "this is the best app for trading"
+      },
+      {
+        "review_id": "play_store:8195a9f9-754a-4526-b7f9-e3babf3a0673",
+        "text_snippet": "very bad app I hate this app ek gatiya app hai but 5 star de hi deta hun"
+      },
+      {
+        "review_id": "play_store:e358ea6c-2828-4b61-9974-a52ff2c839e3",
+        "text_snippet": "this app good no iam invest amount but more amount cutting"
+      },
+      {
+        "review_id": "play_store:94ee479b-d13b-4a18-a943-fd2f6479500a",
+        "text_snippet": "good app I can earn millions of dollar"
+      },
+      {
+        "review_id": "play_store:ce1d0c58-bd50-4dbf-9f75-31b6e835f879",
+        "text_snippet": "You can earn any amount of income per month by using this app."
+      },
+      {
+        "review_id": "play_store:555f2a3b-545a-4055-bf86-b953c82f7bb8",
+        "text_snippet": "bekar experience sabse ghatiya app grow app..mai suggest karunga koi bhi grow app use na kare..na hi"
+      },
+      {
+        "review_id": "play_store:d720ac7c-c9d3-4fa5-b8d1-6ce6622361c3",
+        "text_snippet": "set safe exit there in app!???? plz tel"
+      },
+      {
+        "review_id": "play_store:8891479c-9f0d-4ecc-abd1-1be8064915b9",
+        "text_snippet": "when you trade be careful and be conscious"
+      },
+      {
+        "review_id": "play_store:89eea2f4-434e-4c90-bfe5-48d38f60ca98",
+        "text_snippet": "it's work to good and show me chat how is it go the market up & down"
+      },
+      {
+        "review_id": "play_store:8f9ccb72-e7d8-49e2-b854-7cc13807babc",
+        "text_snippet": "I learn about stock market helps grows app thank you Grows"
+      },
+      {
+        "review_id": "play_store:3d2d9bf0-a9fb-4177-b862-aa9c17cf2f65",
+        "text_snippet": "waste the grow don't use grow he is taking much taxes and"
+      },
+      {
+        "review_id": "play_store:792fcd87-b695-4efd-9239-efa1956ffa94",
+        "text_snippet": "TOTALY WASTE OF TIME AND MONEY ALSO THIS PLATFORM LIKE A SATTA CALLED IT JUWA THAT'S IT BEGINNER'S S"
+      }
+    ],
+    "unmatched_count": 23,
+    "representative_quotes": {
+      "support": [
+        {
+          "text": "I will go to court both on SAMSUNG AND GROW if you don't take immediate action.",
+          "review_id": "play_store:392908e6-e6cc-496d-84b9-e6971f86502c",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "the charges are so heavy and the customer care also bad",
+          "review_id": "play_store:a517bd51-a072-40d5-b2b9-d211777e9c7e",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "poor quality service Don,t install this aap",
+          "review_id": "play_store:76081474-4f4e-43a5-82a4-94a499972467",
+          "rating": 1,
+          "confidence": 1.0
+        }
+      ],
+      "investments": [
+        {
+          "text": "many indicator not apply on chart . something application not working. it's option chain is difficult to read.",
+          "review_id": "play_store:f5f82d91-8c1b-43e4-8dff-13f37be9a1e7",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "Why is there no p and l calendar? and please don't ask me to mail you the concern on your email,",
+          "review_id": "play_store:fa0add4b-ef22-4b47-9e05-a2aef5c70d59",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "Groww is froud app, chart go positive side and call option price go negative side, due to this I lost 300K in 2 month",
+          "review_id": "play_store:4004587a-2425-44e0-afe5-8e2d4d3d817c",
+          "rating": 1,
+          "confidence": 1.0
+        }
+      ],
+      "payments": [
+        {
+          "text": "this app silently deducting brokerage charge even if the transaction is unsuccessful",
+          "review_id": "play_store:9c2eef97-7615-46f2-abc8-8f06578afbea",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "very bad app because apply many hidden charges and the brokerage is very high",
+          "review_id": "play_store:ba9fe200-8013-4bf1-ac46-55fbcddea81e",
+          "rating": 1,
+          "confidence": 0.9
+        },
+        {
+          "text": "this is worst app. charges are more than profit.",
+          "review_id": "play_store:e35565af-80fc-4bd0-a78d-fd1bb5c81efc",
+          "rating": 1,
+          "confidence": 0.9
+        }
+      ],
+      "onboarding": [
+        {
+          "text": "I was unable to log in this app. Whenever I'm trying to login to this app everytime they ask for a new PAN",
+          "review_id": "play_store:b5269045-5b9b-456e-ba85-38bda651fde0",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "Every single time it says PAN and BANK name missmatch",
+          "review_id": "play_store:443982b1-45ea-450c-8713-570732a4e7bc",
+          "rating": 1,
+          "confidence": 0.9
+        },
+        {
+          "text": "Unable to activate my account, when doing esign using aadhar error page is coming and unable to proceed further.",
+          "review_id": "play_store:6cce9a85-da38-4712-af57-0fc5d0e7421b",
+          "rating": 1,
+          "confidence": 0.9
+        }
+      ],
+      "stability": [
+        {
+          "text": "The worst app most of the time when is volatility in the market It freezes and stops showing the execution and price action",
+          "review_id": "play_store:3cbdd850-44aa-4c2a-9c60-cc3514c4ade1",
+          "rating": 1,
+          "confidence": 1.0
+        },
+        {
+          "text": "The worst app is hanging up when the index gets up or downwards.",
+          "review_id": "play_store:c0410b9a-68c1-486a-bed9-b8680c16627e",
+          "rating": 1,
+          "confidence": 0.9
+        },
+        {
+          "text": "Wrost app ever seen although I am using the same.....Maximum time there is manipulation in the app.Whenever market going up or down in your traded direction they updated the profit very slow n opposite to this loss updated with 10x",
+          "review_id": "play_store:a1b07a3c-a7ce-4491-8b30-1dc0b05e9d91",
+          "rating": 1,
+          "confidence": 0.9
+        }
+      ]
+    }
+  },
+  "errors": [],
+  "total_reviews_processed": 1000,
+  "total_classifications": 852
+}

@@ -1,0 +1,128 @@
+2026-05-19T11:28:48 [app_review.phase1] INFO  Loaded app_store=7 play_store=7
+2026-05-19T11:28:48 [app_review.phase1] INFO  Wrote 11 rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/reviews_normalized.csv
+2026-05-19T11:32:02 [app_review.phase1] INFO  Loaded app_store=7 play_store=7
+2026-05-19T11:32:02 [app_review.phase1] INFO  Wrote 11 rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/reviews_normalized.csv
+2026-05-19T22:36:20 [app_review.phase1] INFO  Loaded app_store=37 play_store=37
+2026-05-19T22:36:20 [app_review.phase1] INFO  Wrote 74 rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/reviews_normalized.csv
+2026-05-20T11:07:58 [app_review.phase1] INFO  Loaded app_store=37 play_store=37
+2026-05-20T11:07:58 [app_review.phase1] INFO  Wrote 74 rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/reviews_normalized.csv
+2026-05-20T11:28:00 [app_review.phase1] INFO  Loaded app_store=0 play_store=10000
+2026-05-20T11:28:00 [app_review.phase1] INFO  Wrote 9653 rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/reviews_normalized.csv
+2026-05-20T12:01:53 [app_review.phase1] INFO  Loaded app_store=0 play_store=10000
+2026-05-20T12:01:56 [app_review.phase1] INFO  Wrote 1679 rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/reviews_normalized.csv
+2026-05-20T12:01:56 [app_review.phase1] INFO  Wrote 1679 normalized and 250 emoji rows to /Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/data/runs/2026-W20/normalized.json
+2026-05-25T11:49:23 [app_review.phase2] INFO  Phase 2 starting: product=Groww week_id=2026-W20 model=llama-3.1-8b-instant batch_size=25
+2026-05-27T11:13:41 [app_review.phase2] INFO  Phase 2 starting: product=Groww week_id=2026-W20 model=llama-3.1-8b-instant batch_size=25
+2026-05-27T11:13:41 [app_review.phase2] INFO  Loaded 1679 reviews and 5 legend themes
+2026-05-27T11:13:41 [app_review.phase2] INFO  Preprocessed: 1679 → 1000 reviews (193 truncated to 40 words)
+2026-05-27T11:13:41 [app_review.phase2] INFO  Starting classification: 40 batches × 25 reviews, model=llama-3.1-8b-instant, delay=18s
+2026-05-27T11:13:46 [app_review.phase2] INFO  Batch 1/40: 25 classifications, 4371 tokens, 4.3s
+2026-05-27T11:14:13 [app_review.phase2] INFO  Batch 2/40: 21 classifications, 4296 tokens, 9.4s
+2026-05-27T11:15:01 [app_review.phase2] INFO  Batch 3/40: 20 classifications, 4306 tokens, 30.1s
+2026-05-27T11:15:42 [app_review.phase2] INFO  Batch 4/40: 21 classifications, 4340 tokens, 22.4s
+2026-05-27T11:16:23 [app_review.phase2] INFO  Batch 5/40: 20 classifications, 4339 tokens, 23.6s
+2026-05-27T11:17:10 [app_review.phase2] INFO  Batch 6/40: 19 classifications, 4441 tokens, 28.6s
+2026-05-27T11:17:53 [app_review.phase2] INFO  Batch 7/40: 21 classifications, 4312 tokens, 25.5s
+2026-05-27T11:18:29 [app_review.phase2] INFO  Batch 8/40: 21 classifications, 4311 tokens, 17.5s
+2026-05-27T11:19:14 [app_review.phase2] INFO  Batch 9/40: 22 classifications, 4400 tokens, 27.2s
+2026-05-27T11:19:57 [app_review.phase2] INFO  Batch 10/40: 23 classifications, 4296 tokens, 25.4s
+2026-05-27T11:20:43 [app_review.phase2] INFO  Batch 11/40: 23 classifications, 4316 tokens, 27.8s
+2026-05-27T11:21:24 [app_review.phase2] INFO  Batch 12/40: 21 classifications, 4450 tokens, 22.6s
+2026-05-27T11:22:09 [app_review.phase2] INFO  Batch 13/40: 22 classifications, 4401 tokens, 27.2s
+2026-05-27T11:22:52 [app_review.phase2] INFO  Batch 14/40: 23 classifications, 4539 tokens, 25.3s
+2026-05-27T11:23:43 [app_review.phase2] INFO  Batch 15/40: 19 classifications, 4645 tokens, 32.1s
+2026-05-27T11:24:26 [app_review.phase2] INFO  Batch 16/40: 20 classifications, 4360 tokens, 25.1s
+2026-05-27T11:25:07 [app_review.phase2] INFO  Batch 17/40: 17 classifications, 4349 tokens, 23.9s
+2026-05-27T11:25:51 [app_review.phase2] INFO  Batch 18/40: 23 classifications, 4464 tokens, 25.5s
+2026-05-27T11:26:38 [app_review.phase2] INFO  Batch 19/40: 19 classifications, 4464 tokens, 28.6s
+2026-05-27T11:27:17 [app_review.phase2] INFO  Batch 20/40: 23 classifications, 4419 tokens, 21.0s
+2026-05-27T11:28:02 [app_review.phase2] INFO  Batch 21/40: 20 classifications, 4303 tokens, 27.7s
+2026-05-27T11:28:44 [app_review.phase2] INFO  Batch 22/40: 21 classifications, 4369 tokens, 24.2s
+2026-05-27T11:29:26 [app_review.phase2] INFO  Batch 23/40: 22 classifications, 4292 tokens, 23.6s
+2026-05-27T11:30:14 [app_review.phase2] INFO  Batch 24/40: 24 classifications, 4290 tokens, 29.5s
+2026-05-27T11:30:53 [app_review.phase2] INFO  Batch 25/40: 21 classifications, 4294 tokens, 21.5s
+2026-05-27T11:31:33 [app_review.phase2] INFO  Batch 26/40: 23 classifications, 4289 tokens, 22.3s
+2026-05-27T11:32:18 [app_review.phase2] INFO  Batch 27/40: 22 classifications, 4304 tokens, 26.4s
+2026-05-27T11:33:03 [app_review.phase2] INFO  Batch 28/40: 22 classifications, 4415 tokens, 27.3s
+2026-05-27T11:33:46 [app_review.phase2] INFO  Batch 29/40: 21 classifications, 4288 tokens, 24.5s
+2026-05-27T11:34:26 [app_review.phase2] INFO  Batch 30/40: 20 classifications, 4441 tokens, 22.6s
+2026-05-27T11:35:08 [app_review.phase2] INFO  Batch 31/40: 21 classifications, 4282 tokens, 23.2s
+2026-05-27T11:35:49 [app_review.phase2] INFO  Batch 32/40: 20 classifications, 4375 tokens, 23.2s
+2026-05-27T11:36:35 [app_review.phase2] INFO  Batch 33/40: 22 classifications, 4424 tokens, 28.3s
+2026-05-27T11:37:00 [app_review.phase2] INFO  Batch 34/40: 22 classifications, 4364 tokens, 6.7s
+2026-05-27T11:37:48 [app_review.phase2] INFO  Batch 35/40: 23 classifications, 4208 tokens, 30.5s
+2026-05-27T11:38:31 [app_review.phase2] INFO  Batch 36/40: 20 classifications, 4385 tokens, 24.5s
+2026-05-27T11:39:15 [app_review.phase2] INFO  Batch 37/40: 22 classifications, 4251 tokens, 26.0s
+2026-05-27T11:40:00 [app_review.phase2] INFO  Batch 38/40: 21 classifications, 4363 tokens, 27.4s
+2026-05-27T11:40:42 [app_review.phase2] INFO  Batch 39/40: 21 classifications, 4285 tokens, 24.1s
+2026-05-27T11:41:22 [app_review.phase2] INFO  Batch 40/40: 21 classifications, 4261 tokens, 21.8s
+2026-05-27T11:41:22 [app_review.phase2] INFO  Validation: 5 unique themes, 0 merges
+2026-05-27T11:41:22 [app_review.phase2] INFO  Analytics: 5 themes, 23 unmatched
+2026-05-27T11:41:22 [app_review.phase2] INFO  Phase 2 complete: 852 reviews themed
+2026-05-27T11:41:22 [app_review.phase2] INFO  Phase 2 result: success
+2026-05-31T19:29:32 [app_review.phase3] INFO  Phase 3 starting: product=Groww week_id=2026-W20 model=llama-3.3-70b-versatile
+2026-05-31T19:29:32 [app_review.phase3] INFO  Loaded theming data: 852 themed reviews, 5 legend themes
+2026-05-31T19:29:32 [app_review.phase3] INFO  Top 3 themes: ['Support & Service', 'Mutual Funds & Investments', 'Payments & Transactions'] (excluded: ['KYC & Verification', 'App Stability & UX'])
+2026-05-31T19:29:32 [app_review.phase3] INFO  Selected 9 quote candidates across 3 themes
+2026-05-31T19:29:32 [app_review.phase3] INFO  Generating note with model=llama-3.3-70b-versatile, temperature=0.4
+2026-05-31T19:29:33 [app_review.phase3] INFO  Note generated: 177 words (attempt 1)
+2026-05-31T19:29:33 [app_review.phase3] INFO  Phase 3 complete: 177 words, 0 retries
+2026-05-31T19:29:33 [app_review.phase3] INFO  Phase 3 result: success
+2026-05-31T19:45:31 [app_review.phase3] INFO  Phase 3 starting: product=Groww week_id=2026-W20 model=llama-3.3-70b-versatile
+2026-05-31T19:45:31 [app_review.phase3] INFO  Loaded theming data: 852 themed reviews, 5 legend themes
+2026-05-31T19:45:31 [app_review.phase3] INFO  Top 3 themes: ['Support & Service', 'Mutual Funds & Investments', 'Payments & Transactions'] (excluded: ['KYC & Verification', 'App Stability & UX'])
+2026-05-31T19:45:31 [app_review.phase3] INFO  Selected 9 quote candidates across 3 themes
+2026-05-31T19:45:31 [app_review.phase3] ERROR  Note generation failed: The api_key client option must be set either by passing api_key to the client or by setting the GROQ_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/src/phase3_note/pipeline.py", line 517, in run_note_generation
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/datateam/anaconda3/lib/python3.11/site-packages/groq/_client.py", line 79, in __init__
+    raise GroqError(
+groq.GroqError: The api_key client option must be set either by passing api_key to the client or by setting the GROQ_API_KEY environment variable
+2026-05-31T19:45:31 [app_review.phase3] ERROR  Phase 3 failed: The api_key client option must be set either by passing api_key to the client or by setting the GROQ_API_KEY environment variable
+Traceback (most recent call last):
+  File "/Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/src/phase3_note/cli.py", line 57, in main
+    result = run_note_generation(manifest, paths)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/src/phase3_note/pipeline.py", line 517, in run_note_generation
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/datateam/anaconda3/lib/python3.11/site-packages/groq/_client.py", line 79, in __init__
+    raise GroqError(
+groq.GroqError: The api_key client option must be set either by passing api_key to the client or by setting the GROQ_API_KEY environment variable
+2026-05-31T19:47:04 [app_review.phase3] INFO  Phase 3 starting: product=Groww week_id=2026-W20 model=llama-3.3-70b-versatile
+2026-05-31T19:47:04 [app_review.phase3] INFO  Loaded theming data: 852 themed reviews, 5 legend themes
+2026-05-31T19:47:04 [app_review.phase3] INFO  Top 3 themes: ['Support & Service', 'Mutual Funds & Investments', 'Payments & Transactions'] (excluded: ['KYC & Verification', 'App Stability & UX'])
+2026-05-31T19:47:04 [app_review.phase3] INFO  Selected 9 quote candidates across 3 themes
+2026-05-31T19:47:04 [app_review.phase3] INFO  Generating note with model=llama-3.3-70b-versatile, temperature=0.4
+2026-05-31T19:47:06 [app_review.phase3] INFO  Note generated: 175 words (attempt 1)
+2026-05-31T19:47:06 [app_review.phase3] INFO  Phase 3 complete: 175 words, 0 retries
+2026-05-31T19:47:06 [app_review.phase3] INFO  Phase 3 result: success
+2026-05-31T19:53:39 [app_review.phase4] INFO  Phase 4 starting: product=Groww week_id=2026-W20
+2026-05-31T19:53:39 [app_review.phase4] INFO  Starting Phase 4: Docs MCP
+2026-05-31T19:53:39 [app_review.phase4] ERROR  Phase 4 failed: RunState.__init__() missing 1 required positional argument: 'week_id'
+Traceback (most recent call last):
+  File "/Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/src/phase4_docs_mcp/cli.py", line 54, in main
+    result = run_docs_mcp(manifest, paths)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/datateam/Documents/nextleap/App-Review-Insights-Analyser/src/phase4_docs_mcp/pipeline.py", line 33, in run_docs_mcp
+    run_state = RunState(paths.run_state_json)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: RunState.__init__() missing 1 required positional argument: 'week_id'
+2026-05-31T19:54:32 [app_review.phase4] INFO  Phase 4 starting: product=Groww week_id=2026-W20
+2026-05-31T19:54:32 [app_review.phase4] INFO  Starting Phase 4: Docs MCP
+2026-05-31T19:54:32 [app_review.phase4] INFO  Sending request to MCP server: https://mcp-server-production-4969.up.railway.app/append_to_doc
+2026-05-31T19:54:34 [app_review.phase4] INFO  Successfully published to Google Doc 1QQi7bZD1bvbppkqaAk_nTO674mQtH1J4ouIPabr2ZOw
+2026-05-31T19:54:34 [app_review.phase4] INFO  Phase 4 result: success
+2026-05-31T19:58:59 [app_review.phase5] INFO  Phase 5 starting: product=Groww week_id=2026-W20
+2026-05-31T19:58:59 [app_review.phase5] INFO  Starting Phase 5: Gmail MCP
+2026-05-31T19:58:59 [app_review.phase5] INFO  Sending request to MCP server: https://mcp-server-production-4969.up.railway.app/create_email_draft
+2026-05-31T19:59:00 [app_review.phase5] INFO  Successfully created Gmail draft (ID: r6536719402396996897)
+2026-05-31T19:59:00 [app_review.phase5] INFO  Phase 5 result: success
+2026-05-31T22:38:45 [app_review.phase4] INFO  Phase 4 starting: product=Groww week_id=2026-W20
+2026-05-31T22:38:45 [app_review.phase4] INFO  Starting Phase 4: Docs MCP
+2026-05-31T22:38:45 [app_review.phase4] INFO  Converted markdown to structured plain text (1374 chars)
+2026-05-31T22:38:45 [app_review.phase4] INFO  Sending request to MCP server: https://mcp-server-production-4969.up.railway.app/append_to_doc
+2026-05-31T22:38:46 [app_review.phase4] INFO  Successfully published to Google Doc 1QQi7bZD1bvbppkqaAk_nTO674mQtH1J4ouIPabr2ZOw
+2026-05-31T22:38:46 [app_review.phase4] INFO  Phase 4 result: success

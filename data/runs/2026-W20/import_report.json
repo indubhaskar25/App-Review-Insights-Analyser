@@ -1,0 +1,40 @@
+{
+  "status": "success",
+  "week_id": "2026-W20",
+  "product": "Groww",
+  "generated_at": "2026-05-20T06:31:53Z",
+  "date_range": {
+    "start": "2026-02-24",
+    "end": "2026-05-19"
+  },
+  "row_counts": {
+    "app_store_raw": 0,
+    "play_store_raw": 10000,
+    "merged": 1679,
+    "dropped_empty_text": 347,
+    "dropped_too_short": 7547,
+    "dropped_emoji": 250,
+    "dropped_non_english": 177,
+    "dedup_removed": 0,
+    "after_dedup": 1679,
+    "before_window": 0,
+    "after_window": 0,
+    "in_window": 1679,
+    "final": 1679
+  },
+  "redaction_counts": {
+    "emails": 0,
+    "phones": 0,
+    "handles": 4,
+    "long_ids": 0,
+    "total": 4
+  },
+  "errors": [],
+  "warnings": [
+    "App Store CSV is empty. Add a manual App Store Connect export to reviews_raw/groww_appstore.csv (see reviews_raw/GROWW_DATA_SOURCES.md)."
+  ],
+  "date_summary": {
+    "min": "2026-03-05",
+    "max": "2026-05-19"
+  }
+}

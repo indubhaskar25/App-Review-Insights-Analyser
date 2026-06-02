@@ -1,0 +1,32 @@
+{
+  "week_id": "2026-W20",
+  "current_phase": "gmail_mcp",
+  "status": "complete",
+  "phases": {
+    "import": {
+      "status": "complete",
+      "started_at": "2026-05-20T06:31:53Z",
+      "completed_at": "2026-05-20T06:31:56Z"
+    },
+    "theming": {
+      "status": "complete",
+      "started_at": "2026-05-27T05:43:41Z",
+      "completed_at": "2026-05-27T06:11:22Z"
+    },
+    "note_gen": {
+      "status": "complete",
+      "started_at": "2026-05-31T14:17:04Z",
+      "completed_at": "2026-05-31T14:17:06Z"
+    },
+    "docs_mcp": {
+      "status": "complete",
+      "started_at": "2026-05-31T17:08:45Z",
+      "completed_at": "2026-05-31T17:08:46Z"
+    },
+    "gmail_mcp": {
+      "status": "complete",
+      "started_at": "2026-05-31T14:28:59Z",
+      "completed_at": "2026-05-31T14:29:00Z"
+    }
+  }
+}

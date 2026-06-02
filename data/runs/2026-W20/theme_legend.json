@@ -1,0 +1,91 @@
+{
+  "themes": [
+    {
+      "id": "payments",
+      "name": "Payments & Transactions",
+      "description": "UPI transfers, adding money, withdrawals, wallet, bank linking, billing, transaction failures, and charges",
+      "example_keywords": [
+        "upi",
+        "withdraw",
+        "add money",
+        "bank",
+        "wallet",
+        "charge",
+        "fee",
+        "transaction",
+        "payment"
+      ]
+    },
+    {
+      "id": "onboarding",
+      "name": "KYC & Verification",
+      "description": "Account opening, demat opening, verifications, PAN/Aadhaar upload, signup, profile credentials, and documents",
+      "example_keywords": [
+        "signup",
+        "kyc",
+        "demat",
+        "verify",
+        "pan",
+        "aadhaar",
+        "document",
+        "onboarding"
+      ]
+    },
+    {
+      "id": "stability",
+      "name": "App Stability & UX",
+      "description": "App crashes, loading speed, login/logout issues, freeze, lag, dark mode, clone app warnings, device compatibility, UI layout, general praise or general complaints",
+      "example_keywords": [
+        "crash",
+        "slow",
+        "login",
+        "bug",
+        "glitch",
+        "hang",
+        "lag",
+        "error",
+        "server",
+        "ui",
+        "ux",
+        "good app",
+        "worst app"
+      ]
+    },
+    {
+      "id": "investments",
+      "name": "Mutual Funds & Investments",
+      "description": "Mutual funds, SIP investments, stock trading, intraday, options/F&O, buy/sell orders, charts, holding, and portfolio tracking",
+      "example_keywords": [
+        "sip",
+        "mutual fund",
+        "nav",
+        "redeem",
+        "funds",
+        "order",
+        "trade",
+        "stock",
+        "chart",
+        "f&o",
+        "buy",
+        "sell",
+        "equity"
+      ]
+    },
+    {
+      "id": "support",
+      "name": "Support & Service",
+      "description": "Customer service tickets, help center, chat support, call back requests, resolution delay, and support quality",
+      "example_keywords": [
+        "support",
+        "customer care",
+        "help center",
+        "service",
+        "ticket",
+        "chat",
+        "call back",
+        "respond",
+        "representative"
+      ]
+    }
+  ]
+}
