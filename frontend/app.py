@@ -7,13 +7,17 @@ import streamlit as st
 from pathlib import Path
 import sys
 
-# Ensure project root is importable
+# Ensure project root is importable regardless of working directory
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+# Also change cwd to project root so relative paths work
+import os
+os.chdir(ROOT)
+
 from frontend.utils.data_loader import load_run_data, get_available_runs
 from frontend.utils.styles import inject_css
-from frontend.pages import dashboard, theme_analysis, user_quotes, weekly_note, email_draft
+from frontend._pages import dashboard, theme_analysis, user_quotes, weekly_note, email_draft
 
 # ── Page config ──────────────────────────────────────────────
 st.set_page_config(
