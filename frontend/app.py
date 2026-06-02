@@ -48,7 +48,7 @@ from frontend.utils.data_loader import load_run_data, get_available_runs
 from frontend.utils.styles import inject_css
 
 # Import pages from _pages (underscore prevents Streamlit multi-page detection)
-from frontend._pages import dashboard, theme_analysis, user_quotes, weekly_note, email_draft
+from frontend._pages import dashboard, theme_analysis, user_quotes, weekly_note, email_draft, settings
 
 # ── Page config ───────────────────────────────────────────────
 st.set_page_config(
@@ -106,6 +106,7 @@ with st.sidebar:
         "💬  User Quotes":    "user_quotes",
         "📝  Weekly Note":    "weekly_note",
         "📧  Email Draft":    "email_draft",
+        "⚙️  Settings":       "settings",
     }
 
     if "page" not in st.session_state:
@@ -172,3 +173,5 @@ elif page == "weekly_note":
     weekly_note.render(data, selected_week, run_dir)
 elif page == "email_draft":
     email_draft.render(data, selected_week, run_dir)
+elif page == "settings":
+    settings.render(data, selected_week, run_dir)
