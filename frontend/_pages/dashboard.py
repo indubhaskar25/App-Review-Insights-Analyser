@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import streamlit as st
 from frontend.utils.charts import theme_donut, ratings_trend
+from frontend.utils.layout import card, exec_summary_text
 
 
 def render(data: dict, week_id: str) -> None:
@@ -115,18 +116,11 @@ def render(data: dict, week_id: str) -> None:
 
     with col_left:
         note = data["weekly_note_json"]
-        top_themes = note.get("top_themes", [])
         action_ideas = note.get("action_ideas", [])
 
-        # Build summary text from note body
-        body_md = note.get("body_markdown", "")
-        # Extract first paragraph-like content
-        summary_lines = [
-            ln.strip() for ln in body_md.split("\n")
-            if ln.strip() and not ln.startswith("#") and not ln.startswith("*")
-            and not ln.startswith(">") and not ln.startswith("1.")
-        ]
-        summary_text = " ".join(summary_lines[:3]) if summary_lines else "AI-generated weekly summary."
+        # Build a clean summary from structured note data (body_markdown is all
+        # headers/bullets, so naive prose extraction would leak raw markdown).
+        summary_text = exec_summary_text(note)
 
         # Chip types by position
         chip_types = ["CRITICAL ACTION", "WINNING FEATURE", "TREND ALERT"]
@@ -163,30 +157,32 @@ def render(data: dict, week_id: str) -> None:
         theme_rows = data["theme_rows"]
         top3 = theme_rows[:3]
 
+        # Build the whole card as one flat HTML string. Mixing injected HTML
+        # with indented trailing markup makes Streamlit's markdown parser treat
+        # the trailing block as an indented code block, so keep it unindented.
         bars_html = ""
         for row in top3:
             pct = row["pct_of_total"]
             color = row["color"]
-            bars_html += f"""
-            <div class="theme-bar-row">
-                <div class="theme-bar-label">{row['icon']} {row['name']}</div>
-                <div class="theme-bar-track">
-                    <div class="theme-bar-fill" style="width:{min(pct*2.5,100):.0f}%;background:{color};"></div>
-                </div>
-                <div class="theme-bar-pct">{pct:.0f}%</div>
-            </div>
-            """
+            bars_html += (
+                '<div class="theme-bar-row">'
+                f'<div class="theme-bar-label">{row["icon"]} {row["name"]}</div>'
+                '<div class="theme-bar-track">'
+                f'<div class="theme-bar-fill" style="width:{min(pct*2.5,100):.0f}%;background:{color};"></div>'
+                '</div>'
+                f'<div class="theme-bar-pct">{pct:.0f}%</div>'
+                '</div>'
+            )
+
+        footer_html = (
+            '<div style="margin-top:1rem;font-size:0.75rem;color:#64748b;text-align:right;">'
+            f'{len(theme_rows)} themes total</div>'
+        )
 
         st.markdown(
-            f"""
-            <div class="content-card" style="height:100%;">
-                <div class="card-title">Top 3 Themes</div>
-                {bars_html}
-                <div style="margin-top:1rem;font-size:0.75rem;color:#64748b;text-align:right;">
-                    {len(theme_rows)} themes total
-                </div>
-            </div>
-            """,
+            '<div class="content-card" style="height:100%;">'
+            '<div class="card-title">Top 3 Themes</div>'
+            f'{bars_html}{footer_html}</div>',
             unsafe_allow_html=True,
         )
 
@@ -196,29 +192,26 @@ def render(data: dict, week_id: str) -> None:
     col_chart1, col_chart2 = st.columns(2, gap="medium")
 
     with col_chart1:
-        st.markdown('<div class="content-card">', unsafe_allow_html=True)
-        st.markdown('<div class="card-title">Theme Distribution</div>', unsafe_allow_html=True)
-        fig_donut = theme_donut(data["theme_rows"])
-        st.plotly_chart(fig_donut, use_container_width=True, config={"displayModeBar": False})
-        st.markdown("</div>", unsafe_allow_html=True)
+        with card("Theme Distribution"):
+            fig_donut = theme_donut(data["theme_rows"])
+            st.plotly_chart(fig_donut, use_container_width=True, config={"displayModeBar": False})
 
     with col_chart2:
-        st.markdown('<div class="content-card">', unsafe_allow_html=True)
-        col_title, col_toggle = st.columns([3, 1])
-        with col_title:
-            st.markdown('<div class="card-title">Ratings Trend</div>', unsafe_allow_html=True)
-        with col_toggle:
-            window = st.selectbox(
-                "window",
-                options=[7, 30, 90],
-                index=1,
-                format_func=lambda x: f"{x}D",
-                label_visibility="collapsed",
-                key="ratings_window",
-            )
-        fig_trend = ratings_trend(data["ratings_ts"], window=window)
-        st.plotly_chart(fig_trend, use_container_width=True, config={"displayModeBar": False})
-        st.markdown("</div>", unsafe_allow_html=True)
+        with card():
+            col_title, col_toggle = st.columns([3, 1])
+            with col_title:
+                st.markdown('<div class="card-title">Ratings Trend</div>', unsafe_allow_html=True)
+            with col_toggle:
+                window = st.selectbox(
+                    "window",
+                    options=[7, 30, 90],
+                    index=1,
+                    format_func=lambda x: f"{x}D",
+                    label_visibility="collapsed",
+                    key="ratings_window",
+                )
+            fig_trend = ratings_trend(data["ratings_ts"], window=window)
+            st.plotly_chart(fig_trend, use_container_width=True, config={"displayModeBar": False})
 
     # ── Footer ────────────────────────────────────────────────
     dr = ir.get("date_range", {})

@@ -206,6 +206,25 @@ def inject_css() -> None:
             margin-bottom: 1rem;
         }
 
+        /* ── Bordered container = card() helper ──
+           st.container(border=True) renders a wrapper that CAN hold widgets
+           (charts, tables, columns), unlike a raw markdown <div>. Style it to
+           match .content-card so charts/tables sit inside a real card. */
+        div[data-testid="stVerticalBlockBorderWrapper"] {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 1.25rem 1.5rem !important;
+        }
+        /* Keep nested bordered containers (e.g. inside columns) from doubling
+           up the chrome. */
+        div[data-testid="stVerticalBlockBorderWrapper"]
+            div[data-testid="stVerticalBlockBorderWrapper"] {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
         /* ── Badges ── */
         .badge {
             display: inline-flex;
