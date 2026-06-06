@@ -161,65 +161,54 @@ def render(data: dict, week_id: str, run_dir: Path) -> None:
     col_pipeline, col_artifacts = st.columns(2, gap="medium")
 
     with col_pipeline:
-        st.markdown('<div class="content-card">', unsafe_allow_html=True)
-        st.markdown('<div class="card-title">Pipeline Phase Status</div>', unsafe_allow_html=True)
-
         phases = run_state.get("phases", {})
 
-        # Table header
-        st.markdown(
-            """
-            <div style="display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:0.5rem;
-                        padding:0.4rem 0;border-bottom:1px solid #2a2d3e;margin-bottom:0.25rem;">
-                <div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Phase</div>
-                <div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Status</div>
-                <div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Completed At</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        header_html = (
+            '<div style="display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:0.5rem;'
+            'padding:0.4rem 0;border-bottom:1px solid #2a2d3e;margin-bottom:0.25rem;">'
+            '<div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Phase</div>'
+            '<div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Status</div>'
+            '<div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Completed At</div>'
+            '</div>'
         )
 
+        rows_html = ""
         if phases:
             for phase_key, phase_data in phases.items():
                 label = _PHASE_LABELS.get(phase_key, phase_key.replace("_", " ").title())
                 status = phase_data.get("status", "unknown")
                 completed_at = _fmt_ts(phase_data.get("completed_at"))
-                st.markdown(
-                    f"""
-                    <div style="display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:0.5rem;
-                                padding:0.6rem 0;border-bottom:1px solid #1e2130;
-                                font-size:0.82rem;">
-                        <div style="color:#e2e8f0;">{label}</div>
-                        <div>{_status_badge(status)}</div>
-                        <div style="color:#64748b;font-size:0.75rem;">{completed_at}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
+                rows_html += (
+                    '<div style="display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:0.5rem;'
+                    'padding:0.6rem 0;border-bottom:1px solid #1e2130;font-size:0.82rem;">'
+                    f'<div style="color:#e2e8f0;">{label}</div>'
+                    f'<div>{_status_badge(status)}</div>'
+                    f'<div style="color:#64748b;font-size:0.75rem;">{completed_at}</div>'
+                    '</div>'
                 )
         else:
-            st.markdown(
-                '<div style="padding:1rem 0;font-size:0.82rem;color:#64748b;">No phase data found in run_state.json</div>',
-                unsafe_allow_html=True,
+            rows_html = (
+                '<div style="padding:1rem 0;font-size:0.82rem;color:#64748b;">'
+                'No phase data found in run_state.json</div>'
             )
 
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    with col_artifacts:
-        st.markdown('<div class="content-card">', unsafe_allow_html=True)
-        st.markdown('<div class="card-title">Artifact Health</div>', unsafe_allow_html=True)
-
-        # Table header
         st.markdown(
-            """
-            <div style="display:grid;grid-template-columns:2fr 1fr;gap:0.5rem;
-                        padding:0.4rem 0;border-bottom:1px solid #2a2d3e;margin-bottom:0.25rem;">
-                <div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Filename</div>
-                <div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Status / Size</div>
-            </div>
-            """,
+            '<div class="content-card">'
+            '<div class="card-title">Pipeline Phase Status</div>'
+            f'{header_html}{rows_html}</div>',
             unsafe_allow_html=True,
         )
 
+    with col_artifacts:
+        header_html = (
+            '<div style="display:grid;grid-template-columns:2fr 1fr;gap:0.5rem;'
+            'padding:0.4rem 0;border-bottom:1px solid #2a2d3e;margin-bottom:0.25rem;">'
+            '<div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Filename</div>'
+            '<div style="font-size:0.65rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;">Status / Size</div>'
+            '</div>'
+        )
+
+        rows_html = ""
         present_count = 0
         for filename in _EXPECTED_ARTIFACTS:
             fpath = run_dir / filename
@@ -228,26 +217,25 @@ def render(data: dict, week_id: str, run_dir: Path) -> None:
             if exists:
                 present_count += 1
             badge = _file_badge(exists, size)
-            st.markdown(
-                f"""
-                <div style="display:grid;grid-template-columns:2fr 1fr;gap:0.5rem;
-                            padding:0.45rem 0;border-bottom:1px solid #1e2130;font-size:0.78rem;">
-                    <div style="color:#94a3b8;font-family:monospace;font-size:0.72rem;">{filename}</div>
-                    <div>{badge}</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
+            rows_html += (
+                '<div style="display:grid;grid-template-columns:2fr 1fr;gap:0.5rem;'
+                'padding:0.45rem 0;border-bottom:1px solid #1e2130;font-size:0.78rem;">'
+                f'<div style="color:#94a3b8;font-family:monospace;font-size:0.72rem;">{filename}</div>'
+                f'<div>{badge}</div>'
+                '</div>'
             )
 
+        footer_html = (
+            '<div style="margin-top:0.75rem;font-size:0.75rem;color:#64748b;text-align:right;">'
+            f'{present_count} / {len(_EXPECTED_ARTIFACTS)} artifacts present</div>'
+        )
+
         st.markdown(
-            f"""
-            <div style="margin-top:0.75rem;font-size:0.75rem;color:#64748b;text-align:right;">
-                {present_count} / {len(_EXPECTED_ARTIFACTS)} artifacts present
-            </div>
-            """,
+            '<div class="content-card">'
+            '<div class="card-title">Artifact Health</div>'
+            f'{header_html}{rows_html}{footer_html}</div>',
             unsafe_allow_html=True,
         )
-        st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 

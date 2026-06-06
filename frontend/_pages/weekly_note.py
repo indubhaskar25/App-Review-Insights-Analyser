@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import streamlit as st
+from frontend.utils.layout import exec_summary_text
 
 
 def _impact_level(score: float) -> tuple[str, str]:
@@ -91,19 +92,9 @@ def render(data: dict, week_id: str, run_dir: Path) -> None:
             )
 
     # ── Executive Summary ─────────────────────────────────────
-    body_md = note.get("body_markdown", "")
-    # Extract prose lines (not headers, bullets, quotes)
-    prose_lines = [
-        ln.strip() for ln in body_md.split("\n")
-        if ln.strip()
-        and not ln.startswith("#")
-        and not ln.startswith("*")
-        and not ln.startswith(">")
-        and not ln.startswith("1.")
-        and not ln.startswith("2.")
-        and not ln.startswith("3.")
-    ]
-    exec_summary = " ".join(prose_lines[:4]) if prose_lines else body_md[:400]
+    # body_markdown is entirely headers/bullets/quotes, so synthesise clean
+    # prose from the structured top_themes instead of leaking raw markdown.
+    exec_summary = exec_summary_text(note)
 
     # Risk status derived from avg rating
     avg_rating = data["global_avg_rating"]

@@ -133,193 +133,141 @@ def render(data: dict, week_id: str, run_dir: Path) -> None:
         )
 
     # ── Email preview frame ───────────────────────────────────
-    st.markdown('<div class="email-preview-frame">', unsafe_allow_html=True)
-
-    # Browser chrome bar
-    st.markdown(
-        f"""
-        <div class="email-browser-bar">
-            <div class="browser-dot" style="background:#f87171;"></div>
-            <div class="browser-dot" style="background:#fbbf24;"></div>
-            <div class="browser-dot" style="background:#34d399;"></div>
-            <div class="browser-url">preview.groww.ai/draft_{week_id.replace('-','_').lower()}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # To / Subject fields
-    st.markdown(
-        f"""
-        <div class="email-field-row">
-            <div class="email-field-label">To:</div>
-            <div class="email-field-value">{to_addr}</div>
-        </div>
-        <div class="email-field-row">
-            <div class="email-field-label">Subject:</div>
-            <div class="email-field-value">{subject}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Email body
-    st.markdown('<div class="email-body-content">', unsafe_allow_html=True)
-
-    # Brand header
+    # Build the whole preview as ONE HTML string so the frame actually wraps its
+    # contents. Separate st.markdown calls each get their <div> auto-closed,
+    # which left an empty frame with the email spilling out underneath it.
     dr = ir.get("date_range", {})
     date_range_str = f"{dr.get('start','')} – {dr.get('end','')}"
     product = note.get("product", "Groww")
 
-    st.markdown(
-        f"""
-        <div class="email-brand-header">
-            <div>
-                <div class="email-brand-name">{product} <span style="color:#a78bfa;">Insights</span></div>
-                <div class="email-brand-sub">Intelligence Layer Report</div>
-            </div>
-            <div style="text-align:right;">
-                <div style="font-size:0.78rem;color:#94a3b8;">{date_range_str}</div>
-                <div style="font-size:0.68rem;color:#64748b;">Confidential Internal Draft</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    avg_rating    = data["global_avg_rating"]
+    sentiment_idx = data["sentiment_index"]
+    analyzed      = data["theming_report"].get("total_classifications", 0)
+
+    browser_bar = (
+        '<div class="email-browser-bar">'
+        '<div class="browser-dot" style="background:#f87171;"></div>'
+        '<div class="browser-dot" style="background:#fbbf24;"></div>'
+        '<div class="browser-dot" style="background:#34d399;"></div>'
+        f'<div class="browser-url">preview.groww.ai/draft_{week_id.replace("-","_").lower()}</div>'
+        '</div>'
     )
 
-    # Greeting
-    st.markdown(
-        f"""
-        <p style="font-size:0.88rem;color:#cbd5e1;margin-bottom:0.75rem;">Hi Team,</p>
-        <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;margin-bottom:1rem;">
-            Below is the automated intelligence report for <b style="color:#e2e8f0;">{product} App</b>
-            covering sentiment trends from {dr.get('start','')} to {dr.get('end','')}.
-        </p>
-        """,
-        unsafe_allow_html=True,
+    fields_html = (
+        '<div class="email-field-row">'
+        '<div class="email-field-label">To:</div>'
+        f'<div class="email-field-value">{to_addr}</div>'
+        '</div>'
+        '<div class="email-field-row">'
+        '<div class="email-field-label">Subject:</div>'
+        f'<div class="email-field-value">{subject}</div>'
+        '</div>'
     )
 
-    # Executive highlights bar
-    avg_rating     = data["global_avg_rating"]
-    sentiment_idx  = data["sentiment_index"]
-    negative_pct   = data["negative_pct"]
-    analyzed       = data["theming_report"].get("total_classifications", 0)
-
-    st.markdown(
-        f"""
-        <div class="email-highlights-bar">
-            <div>
-                <div class="highlight-stat-value">{avg_rating}</div>
-                <div class="highlight-stat-label">Avg Sentiment Score</div>
-            </div>
-            <div>
-                <div class="highlight-stat-value" style="color:#34d399;">+{sentiment_idx:.0f}%</div>
-                <div class="highlight-stat-label">Positive Reviews</div>
-            </div>
-            <div>
-                <div class="highlight-stat-value">{analyzed:,}</div>
-                <div class="highlight-stat-label">Reviews Analyzed</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    brand_html = (
+        '<div class="email-brand-header">'
+        '<div>'
+        f'<div class="email-brand-name">{product} <span style="color:#a78bfa;">Insights</span></div>'
+        '<div class="email-brand-sub">Intelligence Layer Report</div>'
+        '</div>'
+        '<div style="text-align:right;">'
+        f'<div style="font-size:0.78rem;color:#94a3b8;">{date_range_str}</div>'
+        '<div style="font-size:0.68rem;color:#64748b;">Confidential Internal Draft</div>'
+        '</div>'
+        '</div>'
     )
 
-    # Key themes
+    greeting_html = (
+        '<p style="font-size:0.88rem;color:#cbd5e1;margin-bottom:0.75rem;">Hi Team,</p>'
+        '<p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;margin-bottom:1rem;">'
+        f'Below is the automated intelligence report for <b style="color:#e2e8f0;">{product} App</b> '
+        f'covering sentiment trends from {dr.get("start","")} to {dr.get("end","")}.'
+        '</p>'
+    )
+
+    highlights_html = (
+        '<div class="email-highlights-bar">'
+        f'<div><div class="highlight-stat-value">{avg_rating}</div>'
+        '<div class="highlight-stat-label">Avg Sentiment Score</div></div>'
+        f'<div><div class="highlight-stat-value" style="color:#34d399;">+{sentiment_idx:.0f}%</div>'
+        '<div class="highlight-stat-label">Positive Reviews</div></div>'
+        f'<div><div class="highlight-stat-value">{analyzed:,}</div>'
+        '<div class="highlight-stat-label">Reviews Analyzed</div></div>'
+        '</div>'
+    )
+
+    theme_html = ""
     top_themes = note.get("top_themes", [])
     if top_themes:
         primary_theme = top_themes[0]
-        tid = primary_theme.get("id", "")
-        cfg = theme_config.get(tid, {"color": "#a78bfa", "label": tid})
-        color = cfg["color"]
-
-        st.markdown(
-            f"""
-            <h3 style="font-size:1rem;font-weight:600;color:#e2e8f0;margin:1.25rem 0 0.5rem 0;">
-                Key Theme: {primary_theme.get('name','')}
-            </h3>
-            <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;margin-bottom:1rem;">
-                {primary_theme.get('summary','')}
-            </p>
-            """,
-            unsafe_allow_html=True,
+        theme_html = (
+            '<h3 style="font-size:1rem;font-weight:600;color:#e2e8f0;margin:1.25rem 0 0.5rem 0;">'
+            f'Key Theme: {primary_theme.get("name","")}</h3>'
+            '<p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;margin-bottom:1rem;">'
+            f'{primary_theme.get("summary","")}</p>'
         )
 
-    # Featured quote
+    quote_html = ""
     quotes = note.get("quotes", [])
     if quotes:
         q = quotes[0]
         tid = q.get("theme_id", "")
         cfg = theme_config.get(tid, {"color": "#a78bfa"})
         qcolor = cfg["color"]
-        st.markdown(
-            f"""
-            <div style="border-left:3px solid {qcolor};padding:0.75rem 1rem;
-                        background:rgba({_hex_to_rgb(qcolor)},0.06);
-                        border-radius:0 8px 8px 0;margin:1rem 0;">
-                <div style="font-size:0.88rem;color:#cbd5e1;font-style:italic;line-height:1.6;">
-                    "{q.get('text','')}"
-                </div>
-                <div style="font-size:0.72rem;color:#64748b;margin-top:0.4rem;">
-                    — Top User Review
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        quote_html = (
+            f'<div style="border-left:3px solid {qcolor};padding:0.75rem 1rem;'
+            f'background:rgba({_hex_to_rgb(qcolor)},0.06);border-radius:0 8px 8px 0;margin:1rem 0;">'
+            '<div style="font-size:0.88rem;color:#cbd5e1;font-style:italic;line-height:1.6;">'
+            f'"{q.get("text","")}"</div>'
+            '<div style="font-size:0.72rem;color:#64748b;margin-top:0.4rem;">— Top User Review</div>'
+            '</div>'
         )
 
-    # Next steps
+    steps_section = ""
     actions = note.get("action_ideas", [])
     if actions:
         steps_html = "".join(
             f'<li style="font-size:0.85rem;color:#94a3b8;margin-bottom:0.4rem;">{a.get("text","")}</li>'
             for a in actions
         )
-        st.markdown(
-            f"""
-            <h3 style="font-size:1rem;font-weight:600;color:#e2e8f0;margin:1.25rem 0 0.5rem 0;">
-                Next Steps
-            </h3>
-            <ul style="padding-left:1.25rem;margin:0;">{steps_html}</ul>
-            """,
-            unsafe_allow_html=True,
+        steps_section = (
+            '<h3 style="font-size:1rem;font-weight:600;color:#e2e8f0;margin:1.25rem 0 0.5rem 0;">Next Steps</h3>'
+            f'<ul style="padding-left:1.25rem;margin:0;">{steps_html}</ul>'
         )
 
-    # Doc link
+    doc_html = ""
     if doc_url:
-        st.markdown(
-            f"""
-            <div style="margin-top:1.25rem;padding:0.75rem 1rem;
-                        background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);
-                        border-radius:8px;">
-                <span style="font-size:0.82rem;color:#94a3b8;">📄 Full report: </span>
-                <a href="{doc_url}" target="_blank"
-                   style="color:#a78bfa;font-size:0.82rem;text-decoration:none;">{doc_url}</a>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        doc_html = (
+            '<div style="margin-top:1.25rem;padding:0.75rem 1rem;'
+            'background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);border-radius:8px;">'
+            '<span style="font-size:0.82rem;color:#94a3b8;">📄 Full report: </span>'
+            f'<a href="{doc_url}" target="_blank" style="color:#a78bfa;font-size:0.82rem;text-decoration:none;">{doc_url}</a>'
+            '</div>'
         )
 
-    # Signature
-    st.markdown(
-        f"""
-        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid #2a2d3e;">
-            <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:0.25rem;">Best regards,</p>
-            <p style="font-size:0.88rem;font-weight:600;color:#e2e8f0;margin:0;">
-                {product} Intelligence Pipeline
-            </p>
-        </div>
-        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid #2a2d3e;
-                    text-align:center;font-size:0.68rem;color:#64748b;">
-            This email was automatically generated by the SaaS Insights Engine.<br>
-            © 2024 Groww Insights · Pipeline: GitHub Actions Active
-        </div>
-        """,
-        unsafe_allow_html=True,
+    signature_html = (
+        '<div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid #2a2d3e;">'
+        '<p style="font-size:0.85rem;color:#94a3b8;margin-bottom:0.25rem;">Best regards,</p>'
+        f'<p style="font-size:0.88rem;font-weight:600;color:#e2e8f0;margin:0;">{product} Intelligence Pipeline</p>'
+        '</div>'
+        '<div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid #2a2d3e;'
+        'text-align:center;font-size:0.68rem;color:#64748b;">'
+        'This email was automatically generated by the SaaS Insights Engine.<br>'
+        '© 2024 Groww Insights · Pipeline: GitHub Actions Active'
+        '</div>'
     )
 
-    st.markdown("</div>", unsafe_allow_html=True)  # email-body-content
-    st.markdown("</div>", unsafe_allow_html=True)  # email-preview-frame
+    body_html = (
+        '<div class="email-body-content">'
+        + brand_html + greeting_html + highlights_html + theme_html
+        + quote_html + steps_section + doc_html + signature_html
+        + '</div>'
+    )
+
+    st.markdown(
+        '<div class="email-preview-frame">' + browser_bar + fields_html + body_html + '</div>',
+        unsafe_allow_html=True,
+    )
 
     # ── Raw email draft expander ──────────────────────────────
     st.markdown("<br>", unsafe_allow_html=True)
